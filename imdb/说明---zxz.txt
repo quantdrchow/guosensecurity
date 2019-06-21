@@ -1,0 +1,54 @@
+最后这里也没有用到。
+
+有效的方法：最后是数据download至：
+C:\Users\guosen\tensorflow_datasets\imdb_reviews\plain_text
+0.1.0文件夹中。
+
+# 数据集部分，采用
+'''
+https://blog.csdn.net/u011311291/article/details/88832813
+'''
+# 的方法。效果不错。源代码还是很重要的，需要有时间就去查看底层源代码。
+修改C:\ProgramData\Anaconda3\Lib\site-packages\tensorflow_datasets\text\imdb.py之后需要重新启动一下pycharm。
+
+=======================================================
+修改之后的代码段如下：
+ def _generate_examples(self, archive, directory):
+    """Generate IMDB examples."""
+    #reg = re.compile(os.path.join("^%s" % directory, "(?P<label>neg|pos)", ""))
+    reg = re.compile("aclImdb\\\\(train|test)\\\\(?P<label>neg|pos)\\\\")
+    for path, imdb_f in archive:
+      res = reg.match(path)
+      if not res:
+        continue
+      text = imdb_f.read().strip()
+      yield {
+          "text": text,
+          "label": res.groupdict()["label"],
+      }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
